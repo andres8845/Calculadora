@@ -1,1 +1,57 @@
-<!-- Startup de la calculadora -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora</title>
+</head>
+<body>
+    <h1>Calculadora</h1>
+
+    <input type="text" id="pantalla" placeholder="0" readonly>
+
+    <br><br>
+
+    <button onclick="limpiar()">C</button>
+    <button onclick="agregar('(')">(</button>
+    <button onclick="agregar(')')">)</button>
+    <button onclick="agregar('/')">÷</button>
+
+    <br><br>
+
+    <button onclick="agregar('7')">7</button>
+    <button onclick="agregar('8')">8</button>
+    <button onclick="agregar('9')">9</button>
+    <button onclick="agregar('*')">×</button>
+
+    <br><br>
+
+    <button onclick="agregar('4')">4</button>
+    <button onclick="agregar('5')">5</button>
+    <button onclick="agregar('6')">6</button>
+    <button onclick="agregar('-')">-</button>
+
+    <br><br>
+
+    <button onclick="agregar('1')">1</button>
+    <button onclick="agregar('2')">2</button>
+    <button onclick="agregar('3')">3</button>
+    <button onclick="agregar('+')">+</button>
+
+    <br><br>
+
+    <button onclick="agregar('0')">0</button>
+    <button onclick="agregar('.')">.</button>
+    <button>=</button>
+
+    <script>
+        function agregar(valor) {
+            document.getElementById("pantalla").value += valor;
+        }
+
+        function limpiar() {
+            document.getElementById("pantalla").value = "";
+        }
+    </script>
+</body>
+</html>
