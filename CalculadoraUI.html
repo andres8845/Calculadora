@@ -110,14 +110,43 @@
       }
       function calcular() {
         const pantalla = document.getElementById("pantalla");
-        const partes = pantalla.value.split("+");
+        try {
+          pantalla.value = evaluar(pantalla.value);
+        } catch (e) {
+          pantalla.value = "Error";
+        }
+      }
 
-        let total = 0;
-        for (const parte of partes) {
-          total += parseFloat(parte);
+      function evaluar(texto) {
+        const tokens = texto.match(/\d+\.?\d*|\.\d+|[+()]/g) || [];
+        let pos = 0;
+
+        function expresion() {
+          let total = termino();
+          while (tokens[pos] === "+") {
+            pos++;
+            total += termino();
+          }
+          return total;
         }
 
-        pantalla.value = isNaN(total) ? "Error" : total;
+        function termino() {
+          const token = tokens[pos++];
+
+          if (token === "(") {
+            const valor = expresion();
+            if (tokens[pos++] !== ")") throw new Error("Falta cerrar )");
+            return valor;
+          }
+
+          const numero = parseFloat(token);
+          if (isNaN(numero)) throw new Error("Se esperaba un número");
+          return numero;
+        }
+
+        const resultado = expresion();
+        if (pos < tokens.length) throw new Error("Símbolos sobrantes");
+        return resultado;
       }
     </script>
   </body>
