@@ -118,15 +118,27 @@
       }
 
       function evaluar(texto) {
-        const tokens = texto.match(/\d+\.?\d*|\.\d+|[+\-()]/g) || [];
+        const tokens = texto.match(/\d+\.?\d*|\.\d+|[+\-*/()]/g) || [];
         let pos = 0;
 
         function expresion() {
-          let total = termino();
+          let total = producto();
           while (tokens[pos] === "+" || tokens[pos] === "-") {
             const operador = tokens[pos++];
-            const derecho = termino();
+            const derecho = producto();
             total = operador === "+" ? total + derecho : total - derecho;
+          }
+          return total;
+        }
+
+        function producto() {
+          let total = termino();
+          while (tokens[pos] === "*" || tokens[pos] === "/") {
+            const operador = tokens[pos++];
+            const derecho = termino();
+            if (operador === "/" && derecho === 0)
+              throw new Error("División entre cero");
+            total = operador === "*" ? total * derecho : total / derecho;
           }
           return total;
         }
